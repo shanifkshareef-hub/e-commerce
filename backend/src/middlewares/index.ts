@@ -1,50 +1,30 @@
+import { UnauthorizedError } from "../errors";
+import config from "../config";
 import express from "express";
-import { get } from "lodash";
 import jwt from "jsonwebtoken";
 
 export const isAuthenticated = (
   req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  const authHeader = req.headers.authorization;
-
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
-
-    jwt.verify(token, "accessTokenSecret", (err, user) => {
-      if (err) {
-        return res.sendStatus(403);
-      }
-
-      req.user = user;
-      next();
-    });
-  } else {
-    res.sendStatus(401);
-  }
-};
-
-export const isOwner = async (
-  req: express.Request,
-  res: express.Response,
+  _: express.Response,
   next: express.NextFunction
 ) => {
   try {
-    const { id } = req.params;
-    const currentUserId = get(req, "identity._id") as string;
+    const authHeader = req.headers.authorization;
 
-    if (!currentUserId) {
-      return res.sendStatus(400);
+    if (authHeader) {
+      const token = authHeader.split("Bearer")[1];
+
+      jwt.verify(token, config.keys.public, (err, user) => {
+        if (err) {
+          throw new UnauthorizedError("Unauthorised");
+        }
+        req.user = user;
+        next();
+      });
+    } else {
+      throw new UnauthorizedError("Unauthorised");
     }
-
-    if (currentUserId.toString() !== id) {
-      return res.sendStatus(403);
-    }
-
-    next();
   } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
+    next(error);
   }
 };

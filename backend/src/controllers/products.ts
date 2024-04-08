@@ -1,63 +1,89 @@
+import { NotFoundError } from "../errors";
 import { create, deleteOne, getAll, getOne, update } from "../db/product";
-import express from "express";
+import { NextFunction, Request, Response } from "express";
+import { checkObjectId } from "../helpers";
 
 export const getAllProducts = async (
-  req: express.Request,
-  res: express.Response
+  _: Request,
+  res: Response,
+  next: NextFunction
 ) => {
   try {
     const products = await getAll();
 
-    return res.status(200).json(products);
+    return res.json({ status: true, data: products });
   } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
+    next(error);
+  }
+};
+
+export const getProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const isIdValid = checkObjectId(id);
+    if (!isIdValid) {
+      throw new NotFoundError("Product not found");
+    }
+    const product = await getOne(id);
+
+    return res.json({ status: true, data: product });
+  } catch (error) {
+    next(error);
   }
 };
 
 export const createProduct = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response,
+  next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
     const product = await create(req.body);
 
-    return res.status(200).json(product).end();
+    return res.json({ status: true, data: product });
   } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
+    next(error);
   }
 };
 
 export const updateProduct = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response,
+  next: NextFunction
 ) => {
   try {
     const { id } = req.params;
-
+    const isIdValid = checkObjectId(id);
+    if (!isIdValid) {
+      throw new NotFoundError("Product not found");
+    }
     const product = await update(id, req.body);
 
-    return res.status(200).json(product).end();
+    return res.json({ status: true, data: product });
   } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
+    next(error);
   }
 };
 
 export const deleteProduct = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response,
+  next: NextFunction
 ) => {
   try {
     const { id } = req.params;
-
+    const isIdValid = checkObjectId(id);
+    if (!isIdValid) {
+      throw new NotFoundError("Product not found");
+    }
     const deletedProduct = await deleteOne(id);
 
-    return res.json(deletedProduct);
+    return res.json({ status: true, data: deletedProduct });
   } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
+    next(error);
   }
 };

@@ -1,11 +1,16 @@
 import mongoose from "mongoose";
 
 // User Config
-const UserSchema = new mongoose.Schema({
-  email: { type: String, required: true },
-  username: { type: String, required: true },
-  password: { type: String, required: true },
-});
+const UserSchema = new mongoose.Schema(
+  {
+    email: { type: String, required: true, unique: true },
+    userName: { type: String, required: true },
+    password: { type: String, required: true },
+  },
+  {
+    timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" },
+  }
+);
 
 export const UserModel = mongoose.model("User", UserSchema);
 

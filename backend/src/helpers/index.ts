@@ -1,6 +1,7 @@
 import config from "../config";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 export const random = () => crypto.randomBytes(128).toString("base64");
 
@@ -12,4 +13,8 @@ export const generateLoginToken = (user: any): string => {
     algorithm: "RS256",
   });
   return token;
+};
+
+export const checkObjectId = (id: string) => {
+  return mongoose.Types.ObjectId.isValid(id);
 };
