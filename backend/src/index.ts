@@ -5,7 +5,6 @@ import cookieParser from "cookie-parser";
 import compression from "compression";
 import cors from "cors";
 import morgan from "morgan";
-
 import router from "./router";
 import mongoose from "mongoose";
 import config from "./config";

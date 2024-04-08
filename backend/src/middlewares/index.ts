@@ -12,7 +12,7 @@ export const isAuthenticated = (
     const authHeader = req.headers.authorization;
 
     if (authHeader) {
-      const token = authHeader.split("Bearer")[1];
+      const token = authHeader.split("Bearer ")[1];
 
       jwt.verify(token, config.keys.public, (err, user) => {
         if (err) {
