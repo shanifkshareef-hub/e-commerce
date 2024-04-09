@@ -2,9 +2,33 @@
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import React from "react";
+import Services from "@/services/auth";
+import { LoginData } from "../interfaces";
+import { toast } from "react-toastify";
+import { cookieStore } from "@/utils/helpers";
 
 const Login = () => {
   const router = useRouter();
+
+  const handleSubmit = async (
+    values: LoginData,
+    setSubmitting: (val: boolean) => void
+  ) => {
+    const resp = await Services.login(values);
+    if (resp && resp.status && resp.data) {
+      console.log("resp", resp);
+
+      cookieStore.set("token", resp.data.token, { path: "/" });
+
+      const res = await Services.getPk();
+      if (res && res.status && res.data) {
+        cookieStore.set("pk", res.data, { path: "/" });
+      }
+
+      router.push("/");
+    }
+    setSubmitting(false);
+  };
 
   return (
     <div>
@@ -35,12 +59,7 @@ const Login = () => {
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
-              console.log("values", values);
-
-              //   setTimeout(() => {
-              //     alert(JSON.stringify(values, null, 2));
-              //     setSubmitting(false);
-              //   }, 400);
+              handleSubmit(values, setSubmitting);
             }}
           >
             {({ isSubmitting }) => (

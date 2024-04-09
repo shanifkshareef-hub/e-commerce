@@ -2,9 +2,26 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { RegisterData } from "../interfaces";
+import Services from "@/services/auth";
 
 const Register = () => {
   const router = useRouter();
+
+  const handleSubmit = async (
+    values: RegisterData,
+    setSubmitting: (val: boolean) => void
+  ) => {
+    console.log("resp");
+
+    const resp = await Services.register(values);
+    if (resp && resp.status && resp.data) {
+      console.log("resp", resp);
+
+      router.push("/login");
+    }
+    setSubmitting(false);
+  };
 
   return (
     <div>
@@ -22,7 +39,12 @@ const Register = () => {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <Formik
-            initialValues={{ email: "", password: "", confirmPassword: "" }}
+            initialValues={{
+              userName: "",
+              email: "",
+              password: "",
+              confirmPassword: "",
+            }}
             validate={(values) => {
               const errors: { email?: string; password?: string } = {};
 
@@ -38,7 +60,7 @@ const Register = () => {
             }}
             onSubmit={(values, { setSubmitting }) => {
               const { confirmPassword, ...rest } = values;
-              console.log("values", rest);
+              handleSubmit(rest, setSubmitting);
             }}
           >
             {({ isSubmitting }) => (
