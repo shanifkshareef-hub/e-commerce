@@ -1,8 +1,14 @@
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
 import { KJUR } from "jsrsasign";
-
+import dayJs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import relativeTime from "dayjs/plugin/relativeTime";
 export const cookieStore = new Cookies();
+
+dayJs.extend(localizedFormat);
+dayJs.extend(relativeTime);
+export const dayjs = dayJs;
 
 export const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
@@ -30,4 +36,20 @@ export function isAuthenticated(): boolean {
     return false;
   }
   return true;
+}
+
+export function generateRandom(min: number, max: number) {
+  // find diff
+  let difference = max - min;
+
+  // generate random number
+  let rand = Math.random();
+
+  // multiply with difference
+  rand = Math.floor(rand * difference);
+
+  // add with min value
+  rand = rand + min;
+
+  return rand;
 }
