@@ -1,8 +1,8 @@
 import { IProduct, Resp } from "@/interfaces";
 import request from "@/utils/request";
 
-const list = () => {
-  return request.get(`products`);
+const list = (params?: { latest: boolean }) => {
+  return request.get(`products`, { params });
 };
 
 const getOne = (id: string): Promise<Resp<IProduct>> => {

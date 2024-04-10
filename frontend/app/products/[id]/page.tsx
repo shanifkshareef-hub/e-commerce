@@ -10,6 +10,7 @@ import pattern1 from "@/assets/1.png";
 import pattern2 from "@/assets/2.png";
 import pattern3 from "@/assets/3.png";
 import pattern4 from "@/assets/4.png";
+import PageTitle from "@/components/common/PageTitle";
 
 const Details = ({ params: { id } }: { params: { id: string } }) => {
   const [product, setProduct] = useState<IProduct>();
@@ -33,17 +34,15 @@ const Details = ({ params: { id } }: { params: { id: string } }) => {
 
   return (
     <div>
-      <div className="font-semibold text-gray-200 flex space-x-1 items-center text-2xl pb-4">
-        <FaChevronLeft
-          onClick={() => {
-            router.push("/products");
-          }}
-          className="text-xl cursor-pointer "
-        />
-        <p>Product Details</p>
-      </div>
+      <PageTitle
+        title="Product Details"
+        onBack={() => {
+          router.push("/products");
+        }}
+      />
+
       {product && (
-        <div className="bg-gray-800">
+        <div className="bg-gray-900">
           <div className="pt-6">
             <div className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 grid grid-cols-9">
               <div className="col-span-6 flex justify-between w-fill">

@@ -19,7 +19,7 @@ const ProductCard: React.FC<IProductCard> = ({ product }) => {
 
   return (
     <div
-      className="group relative bg-gray-800 rounded-md p-4"
+      className="group relative bg-gray-900 rounded-md p-4"
       onClick={() => {
         router.push(`products/${product._id}`);
       }}

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Services from "@/services/products";
 import { IProduct } from "../../interfaces";
 import ListProducts from "@/components/common/ListProducts";
+import PageTitle from "@/components/common/PageTitle";
 
 const Products = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -19,7 +20,9 @@ const Products = () => {
   };
 
   return (
-    <div>
+    <div key={"all-products"}>
+      <PageTitle title="All Products" />
+
       {products.length > 0 ? <ListProducts products={products} /> : <>empty</>}
     </div>
   );
