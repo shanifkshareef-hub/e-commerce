@@ -18,6 +18,8 @@ export function isAuthenticated(): boolean {
   let token = cookieStore.get("token");
   let pk = cookieStore.get("pk");
 
+  console.log(token, pk);
+
   if (!token || !pk) return false;
 
   if (

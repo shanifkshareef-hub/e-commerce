@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import Services from "@/services/auth";
 import { LoginData } from "../interfaces";
-import { toast } from "react-toastify";
 import { cookieStore } from "@/utils/helpers";
 
 const Login = () => {
