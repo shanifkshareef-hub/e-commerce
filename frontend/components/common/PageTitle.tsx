@@ -12,7 +12,7 @@ const PageTitle: React.FC<Props> = ({ title, onBack }) => {
         <FaChevronLeft onClick={onBack} className="text-xl cursor-pointer" />
       )}
       <h2 className="text-2xl font-bold tracking-tight text-gray-200">
-        All Products
+        {title}
       </h2>
     </div>
   );

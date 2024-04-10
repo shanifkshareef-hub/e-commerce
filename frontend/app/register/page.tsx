@@ -12,12 +12,8 @@ const Register = () => {
     values: RegisterData,
     setSubmitting: (val: boolean) => void
   ) => {
-    console.log("resp");
-
     const resp = await Services.register(values);
     if (resp && resp.status && resp.data) {
-      console.log("resp", resp);
-
       router.push("/login");
     }
     setSubmitting(false);

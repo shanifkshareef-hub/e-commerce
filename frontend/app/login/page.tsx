@@ -15,8 +15,6 @@ const Login = () => {
   ) => {
     const resp = await Services.login(values);
     if (resp && resp.status && resp.data) {
-      console.log("resp", resp);
-
       cookieStore.set("token", resp.data.token, { path: "/" });
 
       const res = await Services.getPk();

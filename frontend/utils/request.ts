@@ -34,7 +34,6 @@ request.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log("error", error);
     toast(error);
     // return Promise.reject(error);
   }

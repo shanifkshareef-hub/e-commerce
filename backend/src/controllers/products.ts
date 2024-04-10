@@ -1,15 +1,29 @@
 import { NotFoundError } from "../errors";
-import { create, deleteOne, getAll, getOne, update } from "../db/product";
+import {
+  create,
+  deleteOne,
+  getAll,
+  getAllLatest,
+  getOne,
+  update,
+} from "../db/product";
 import { NextFunction, Request, Response } from "express";
 import { checkObjectId } from "../helpers";
 
 export const getAllProducts = async (
-  _: Request,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const products = await getAll();
+    const isLatest = req.query.isLatest;
+
+    let products;
+    if (isLatest) {
+      products = await getAllLatest();
+    } else {
+      products = await getAll();
+    }
 
     return res.json({ status: true, data: products });
   } catch (error) {
@@ -25,10 +39,14 @@ export const getProduct = async (
   try {
     const { id } = req.params;
     const isIdValid = checkObjectId(id);
+
     if (!isIdValid) {
       throw new NotFoundError("Product not found");
     }
     const product = await getOne(id);
+    if (!product) {
+      throw new NotFoundError("Product not found");
+    }
 
     return res.json({ status: true, data: product });
   } catch (error) {
@@ -62,7 +80,9 @@ export const updateProduct = async (
       throw new NotFoundError("Product not found");
     }
     const product = await update(id, req.body);
-
+    if (!product) {
+      throw new NotFoundError("Product not found");
+    }
     return res.json({ status: true, data: product });
   } catch (error) {
     next(error);
@@ -81,6 +101,10 @@ export const deleteProduct = async (
       throw new NotFoundError("Product not found");
     }
     const deletedProduct = await deleteOne(id);
+
+    if (!deletedProduct) {
+      throw new NotFoundError("Product not found");
+    }
 
     return res.json({ status: true, data: deletedProduct });
   } catch (error) {

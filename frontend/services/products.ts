@@ -1,7 +1,7 @@
 import { IProduct, Resp } from "@/interfaces";
 import request from "@/utils/request";
 
-const list = (params?: { latest: boolean }) => {
+const list = (params?: { isLatest: boolean }) => {
   return request.get(`products`, { params });
 };
 

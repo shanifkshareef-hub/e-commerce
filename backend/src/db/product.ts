@@ -16,10 +16,13 @@ export const ProductModel = mongoose.model("Product", ProductSchema);
 
 // Product Actions
 export const getAll = () => ProductModel.find();
+export const getAllLatest = () =>
+  ProductModel.find().limit(8).sort({ createdAt: "descending" });
 export const getOne = (id: string) => ProductModel.findById(id);
 
 export const create = (values: Record<string, any>) =>
   new ProductModel(values).save().then((product) => product.toObject());
+
 export const update = (id: string, values: Record<string, any>) => {
   return ProductModel.findByIdAndUpdate(id, values);
 };

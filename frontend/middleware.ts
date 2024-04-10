@@ -24,8 +24,6 @@ export async function middleware(request: NextRequest) {
   const LOGIN = new URL("/login", request.url);
 
   if (request.nextUrl.pathname.startsWith("/_next")) {
-    console.log("next");
-
     return NextResponse.next();
   }
 
@@ -53,7 +51,6 @@ export async function middleware(request: NextRequest) {
   let isValid = verifyToken();
 
   if (pathname === "/login") {
-    console.log("isValid", isValid);
     if (isValid) {
       NextResponse.redirect(new URL("/", request.url));
     }
