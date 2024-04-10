@@ -2,7 +2,7 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { RegisterData } from "../interfaces";
+import { RegisterData } from "../../interfaces";
 import Services from "@/services/auth";
 
 const Register = () => {

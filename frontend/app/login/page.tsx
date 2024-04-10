@@ -3,7 +3,7 @@ import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import React from "react";
 import Services from "@/services/auth";
-import { LoginData } from "../interfaces";
+import { LoginData } from "../../interfaces";
 import { cookieStore } from "@/utils/helpers";
 
 const Login = () => {

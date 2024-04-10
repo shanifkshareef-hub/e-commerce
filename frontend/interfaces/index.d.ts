@@ -24,3 +24,11 @@ export interface LoginResponse {
   user: IUser;
   token: string;
 }
+
+export interface IProduct {
+  title: string;
+  description: string;
+  price: number;
+  createdAt: string;
+  updatedAt: string;
+}

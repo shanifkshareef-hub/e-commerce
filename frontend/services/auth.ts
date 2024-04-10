@@ -4,7 +4,7 @@ import {
   LoginResponse,
   RegisterData,
   Resp,
-} from "@/app/interfaces";
+} from "@/interfaces";
 import request from "@/utils/request";
 
 const login = (data: LoginData): Promise<Resp<LoginResponse>> => {

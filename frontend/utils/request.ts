@@ -29,10 +29,7 @@ const request = axios.create({
 // Request interceptor for adding the bearer token
 request.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${cookieStore.get("token") ?? ""}`;
-    }
+    config.headers.Authorization = `Bearer ${cookieStore.get("token") ?? ""}`;
 
     return config;
   },
