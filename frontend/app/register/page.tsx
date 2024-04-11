@@ -1,9 +1,10 @@
 "use client";
+import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
-import React from "react";
 import { RegisterData } from "../../interfaces";
 import Services from "@/services/auth";
+import Link from "next/link";
 
 const Register = () => {
   const router = useRouter();
@@ -80,7 +81,7 @@ const Register = () => {
                     </div>
                   </div>
 
-                  <div className="">
+                  <div>
                     <label
                       htmlFor="email"
                       className="block text-sm font-medium leading-6 text-gray-300"
@@ -153,13 +154,14 @@ const Register = () => {
               </Form>
             )}
           </Formik>
-          <p
-            className="text-sm mt-2 text-end font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer"
-            onClick={() => {
-              router.push("/login");
-            }}
-          >
-            Log in
+          <p className="text-sm mt-2">
+            Already have an account ?{" "}
+            <Link
+              href="/login"
+              className="font-medium cursor-pointer text-indigo-600 hover:text-indigo-500 "
+            >
+              Login
+            </Link>
           </p>
         </div>
       </div>

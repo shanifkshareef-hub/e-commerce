@@ -2,9 +2,10 @@
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import React from "react";
-import Services from "@/services/auth";
 import { LoginData } from "../../interfaces";
 import { cookieStore } from "@/utils/helpers";
+import Services from "@/services/auth";
+import Link from "next/link";
 
 const Login = () => {
   const router = useRouter();
@@ -88,15 +89,6 @@ const Login = () => {
                     >
                       Password
                     </label>
-
-                    <div className="text-sm">
-                      <a
-                        href="#"
-                        className="font-semibold text-indigo-600 hover:text-indigo-500"
-                      >
-                        Forgot password?
-                      </a>
-                    </div>
                   </div>
                   <div className="mt-2">
                     <Field
@@ -120,13 +112,14 @@ const Login = () => {
               </Form>
             )}
           </Formik>
-          <p
-            className="text-sm mt-2 text-end font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer"
-            onClick={() => {
-              router.push("/register");
-            }}
-          >
-            Sign up or Register
+          <p className="text-sm mt-2">
+            Don't have an account ?{" "}
+            <Link
+              href="/register"
+              className="font-medium cursor-pointer text-indigo-600 hover:text-indigo-500 "
+            >
+              Register
+            </Link>
           </p>
         </div>
       </div>

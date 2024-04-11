@@ -1,10 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+
+const ListProducts = dynamic(() => import("@/components/common/ListProducts"));
+import PageTitle from "@/components/common/PageTitle";
+
 import Services from "@/services/products";
 import { IProduct } from "../../interfaces";
-import ListProducts from "@/components/common/ListProducts";
-import PageTitle from "@/components/common/PageTitle";
-import { notification } from "antd";
 
 const Products = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -24,7 +26,7 @@ const Products = () => {
     <div key={"all-products"}>
       <PageTitle title="All Products" />
 
-      {products.length > 0 ? <ListProducts products={products} /> : <>empty</>}
+      {products.length > 0 && <ListProducts products={products} />}
     </div>
   );
 };

@@ -1,11 +1,14 @@
 "use client";
-import AppLayout from "@/components/common/AppLayout";
-import ListProducts from "@/components/common/ListProducts";
-import PageTitle from "@/components/common/PageTitle";
-import { IProduct } from "@/interfaces";
-import { useEffect, useState } from "react";
-import Services from "@/services/products";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+const ListProducts = dynamic(() => import("@/components/common/ListProducts"));
+
+import { IProduct } from "@/interfaces";
+import Services from "@/services/products";
+import dynamic from "next/dynamic";
+import AppLayout from "@/components/common/AppLayout";
+import PageTitle from "@/components/common/PageTitle";
 
 export default function Home() {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -37,11 +40,7 @@ export default function Home() {
           </div>
         </div>
 
-        {products.length > 0 ? (
-          <ListProducts products={products} />
-        ) : (
-          <>empty</>
-        )}
+        {products.length > 0 && <ListProducts products={products} />}
       </div>
     </AppLayout>
   );

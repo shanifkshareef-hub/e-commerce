@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const publicRoutes = ["/login"];
+  const publicRoutes = ["/login", "/register"];
 
   const isPublic = publicRoutes.some((route) => route === pathname);
 
