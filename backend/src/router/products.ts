@@ -8,11 +8,21 @@ import {
   updateProduct,
   getProduct,
 } from "../controllers/products";
+import {
+  IdParamSchema,
+  ProductCreateSchema,
+  ProductQuerySchema,
+} from "../middlewares/validations";
 
 export default (router: express.Router) => {
-  router.get("/products", isAuthenticated, getAllProducts);
-  router.get("/products/:id", isAuthenticated, getProduct);
-  router.post("/products", isAuthenticated, createProduct);
-  router.put("/products/:id", isAuthenticated, updateProduct);
-  router.delete("/products/:id", isAuthenticated, deleteProduct);
+  router.get("/products", isAuthenticated, ProductQuerySchema, getAllProducts);
+  router.get("/products/:id", isAuthenticated, IdParamSchema, getProduct);
+  router.post("/products", isAuthenticated, ProductCreateSchema, createProduct);
+  router.put(
+    "/products/:id",
+    isAuthenticated,
+    ProductCreateSchema,
+    updateProduct
+  );
+  router.delete("/products/:id", isAuthenticated, IdParamSchema, deleteProduct);
 };

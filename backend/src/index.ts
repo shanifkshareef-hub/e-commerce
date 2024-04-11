@@ -8,6 +8,7 @@ import morgan from "morgan";
 import router from "./router";
 import mongoose from "mongoose";
 import config from "./config";
+import { isCelebrateError } from "celebrate";
 
 const app = express();
 
@@ -56,6 +57,23 @@ app.use(function errorMiddleware(
   _next: (err: any) => any
 ) {
   let stack = process.env.NODE_ENV === "production" ? {} : error.stack;
+
+  if (isCelebrateError(error)) {
+    return response.status(400).json({
+      status: false,
+      message: "Invalid request",
+      errors:
+        (error.details.has("body") &&
+          error.details.get("body").details.map((err) => err.message)) ||
+        (error.details.has("params") &&
+          error.details.get("params").details.map((err) => err.message)) ||
+        (error.details.has("query") &&
+          error.details.get("query").details.map((err) => err.message)) ||
+        "input validation failed",
+      stack,
+      code: 400,
+    });
+  }
 
   return response.status(error.httpCode || 500).json({
     status: false,
