@@ -1,11 +1,11 @@
 <p align="center" style="margin-top: 120px">
 
-  <h3 align="center">ECommerce Application</h3>
+  <h3 align="center">E-Commerce Application</h3>
 
 
 </p>
 
-## About Bill ECommerce Application 🏓
+## About Bill E-Commerce Application 🏓
 
 The project aims to develop an e-commerce website where users can browse products online. 
 The website will feature a user-friendly interface with multiple pages, including a home page displaying latest products, a product listing page showcasing all available products, and a product detail page providing comprehensive information about individual products.
