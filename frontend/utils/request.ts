@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { API_HOST, clearCookies } from "./helpers";
-import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
+import { notification } from "antd";
 const cookieStore = new Cookies();
 
 const codeMessage: Record<number, string> = {
@@ -27,17 +27,11 @@ const request = axios.create({
 });
 
 // Request interceptor for adding the bearer token
-request.interceptors.request.use(
-  (config) => {
-    config.headers.Authorization = `Bearer ${cookieStore.get("token") ?? ""}`;
+request.interceptors.request.use((config) => {
+  config.headers.Authorization = `Bearer ${cookieStore.get("token") ?? ""}`;
 
-    return config;
-  },
-  (error) => {
-    toast(error);
-    // return Promise.reject(error);
-  }
-);
+  return config;
+});
 
 // Response interceptor
 request.interceptors.response.use(
@@ -49,25 +43,32 @@ request.interceptors.response.use(
   function (error: AxiosError) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
+
     if (error.response) {
-      let data = error.response.data;
+      let data: any = error.response.data;
+      let message = data.message as string;
       let statusCode = error.response.status;
 
-      toast.error(`
-      Unable to read message.                           ${codeMessage[statusCode]}`);
+      notification.error({
+        message: message.charAt(0).toUpperCase().concat(message.substring(1)),
+        description: codeMessage[statusCode],
+      });
 
-      if (statusCode === 401 && window.location.pathname !== "/") {
+      if (statusCode === 401 && window.location.pathname !== "/login") {
         clearCookies();
         window.location.href = "/login";
       }
     } else if (error.request) {
-      toast("Unable to handle request");
-
-      toast.error(`
-      Unable to read message.`);
+      notification.error({
+        message: "Unable to handle request",
+        description: "Check with administrator",
+      });
     } else {
-      toast.error(`
-      Unable to read message.`);
+      notification.error({
+        message: "Network anomaly",
+        description:
+          "Your network has an exception and cannot connect to the server",
+      });
     }
   }
 );

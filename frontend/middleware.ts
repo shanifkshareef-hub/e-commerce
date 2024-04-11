@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { clearCookies, isAuthenticated } from "./utils/helpers";
 import { KJUR } from "jsrsasign";
 
 // Add whatever paths you want to PROTECT here

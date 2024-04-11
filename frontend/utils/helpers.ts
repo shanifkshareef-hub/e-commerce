@@ -1,9 +1,9 @@
-import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
 import { KJUR } from "jsrsasign";
 import dayJs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { notification } from "antd";
 export const cookieStore = new Cookies();
 
 dayJs.extend(localizedFormat);
@@ -29,8 +29,7 @@ export function isAuthenticated(): boolean {
   if (
     !KJUR.jws.JWS.verifyJWT(token, pk, { alg: ["RS256"], gracePeriod: 120 })
   ) {
-    toast("Error during authentication");
-
+    notification.error({ message: "Error during authentication" });
     return false;
   }
   return true;

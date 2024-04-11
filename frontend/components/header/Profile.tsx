@@ -1,3 +1,4 @@
+import { clearCookies } from "@/utils/helpers";
 import {
   Button,
   Dropdown,
@@ -22,7 +23,8 @@ const Profile = () => {
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem
           onClick={() => {
-            router.push("/");
+            clearCookies();
+            router.push("/login");
           }}
           key="home"
         >
