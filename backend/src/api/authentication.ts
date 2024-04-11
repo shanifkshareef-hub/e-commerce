@@ -1,5 +1,5 @@
 import express from "express";
-import { getPk, login, register } from "../controllers/authentication";
+import { getPk, login, register } from "../services/authentication";
 import { RegisterSchema, loginSchema } from "../middlewares/validations";
 
 export default (router: express.Router) => {

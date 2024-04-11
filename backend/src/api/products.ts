@@ -7,7 +7,7 @@ import {
   getAllProducts,
   updateProduct,
   getProduct,
-} from "../controllers/products";
+} from "../services/products";
 import {
   IdParamSchema,
   ProductCreateSchema,

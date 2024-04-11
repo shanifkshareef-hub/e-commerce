@@ -25,16 +25,17 @@ export const login = async (
 
     let same = await bcrypt.compare(password, user.password);
     if (same) {
-      let token = generateLoginToken(user);
+      const userData = {
+        id: user.id,
+        email: user.email,
+        userName: user.userName,
+      };
+      let token: string = generateLoginToken(userData);
 
       return res.json({
         status: true,
         data: {
-          user: {
-            id: user.id,
-            email: user.email,
-            userName: user.userName,
-          },
+          user: userData,
           token: token,
         },
       });
